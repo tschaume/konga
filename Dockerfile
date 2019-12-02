@@ -2,6 +2,7 @@ FROM node:10.16-alpine
 
 RUN apk upgrade --update \
     && apk add bash git ca-certificates \
+    && npm config set unsafe-perm true \
     && npm install -g bower \
     && npm config delete python
 
