@@ -1,0 +1,17 @@
+version: '2.2'
+
+services:
+
+    konga:
+        build: .
+        environment:
+            - KONG_URL=$KONG_URL
+            - KONGA_ADMIN_USERNAME=$KONGA_ADMIN_USERNAME
+            - KONGA_ADMIN_EMAIL=$KONGA_ADMIN_EMAIL
+            - KONGA_ADMIN_FIRSTNAME=$KONGA_ADMIN_FIRSTNAME
+            - KONGA_ADMIN_LASTNAME=$KONGA_ADMIN_LASTNAME
+            - KONGA_ADMIN_PASSWORD=$KONGA_ADMIN_PASSWORD
+            - KONGA_SEED_KONG_NODE_DATA_SOURCE_FILE=/app/kong_node.data
+            - KONGA_SEED_USER_DATA_SOURCE_FILE=/app/userdb.data
+        ports:
+            - "1337:1337"

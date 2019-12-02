@@ -26,7 +26,6 @@
             paths: [],
             strip_path: true,
             preserve_host: false,
-            https_redirect_status_code: 426,
             regex_priority: 0
           }
         }
