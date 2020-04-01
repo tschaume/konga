@@ -1,4 +1,4 @@
-FROM node:10.16-alpine
+FROM node:13.12.0-alpine
 
 RUN apk upgrade --update \
     && apk add bash git ca-certificates \
