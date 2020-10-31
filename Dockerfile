@@ -1,4 +1,4 @@
-FROM node:10.16-alpine
+FROM node:12.16-alpine
 
 RUN apk upgrade --update \
     && apk add bash git ca-certificates \
@@ -15,7 +15,10 @@ RUN npm --unsafe-perm --production install \
     && rm -rf /var/cache/apk/* \
         /app/.git \
         /app/screenshots \
-        /app/test
+        /app/test \
+    && adduser -H -S -g "Konga service owner" -D -u 1200 -s /sbin/nologin konga \
+    && mkdir /app/kongadata /app/.tmp \
+    && chown -R 1200:1200 /app/views /app/kongadata /app/.tmp
 
 COPY kong_node.data /app/kong_node.data
 COPY userdb.data /app/userdb.data

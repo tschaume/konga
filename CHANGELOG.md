@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.14.9](https://github.com/pantsel/konga/releases/tag/0.14.9)
+* Fix security issue that allowed a user to escalate to admin status. (Kudos to [j3ssie](https://github.com/j3ssie)).
+* Fix XSS vulnerabity on alerts and notifications. (Kudos to [j3ssie](https://github.com/j3ssie)).
+* Fix issues #555, #562. Initial registration allows multiple admin users to be created
+* Implemented missing `headers`, `snis`, `sources`, `destingations` and `path_handling` fields on routes.
+* Implemented missing `client_certificate` field on services.
+* Added the ability to seed initial user and node data via configmaps and mounts PR: #522
+* Added Basic Auth credentials support on Connections PR: #393
+* Implemented ACME plugin configuration
+* Updated project dependencies
+* Fix some typos PRs: #551, #546
+
 ## [0.14.7](https://github.com/pantsel/konga/releases/tag/0.14.7)
 * Fixed `NO_AUTH` onboarding problems related to #474 when using a database.
 
@@ -99,8 +111,7 @@ than mongoDB, you will have to apply the migrations as described in README.md**
 
 ## [0.10.3](https://github.com/pantsel/konga/releases/tag/0.10.3) - 07-03-2018
 
-* Added passive healtchecks configuration in upstreams
-
+* Added passive health checks configuration in upstreams
 
 ## [0.10.2](https://github.com/pantsel/konga/releases/tag/0.10.2) - 03-03-2018
 

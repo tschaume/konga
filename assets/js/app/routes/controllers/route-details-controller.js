@@ -13,6 +13,30 @@
 
         var availableFormattedVersion = RoutesService.getLastAvailableFormattedVersion($rootScope.Gateway.version);
         $scope.route = $scope.route || _route;
+
+        // Transform headers attr to a compatible array
+        if($scope.route.headers && !_.isArray($scope.route.headers) && Object.keys($scope.route.headers).length) {
+          const array = [];
+          Object.keys($scope.route.headers).forEach(key => {
+            const str = `${key}:${$scope.route.headers[key].join(",")}`
+            array.push(str)
+          })
+          $scope.route.headers = array;
+        }
+        
+        // Transform sources and destinations
+        if($scope.route.sources && $scope.route.sources.length) {
+          $scope.route.sources = _.map($scope.route.sources, source => {
+            return source.ip + (source.port ? ":" + source.port : "");
+          })
+        }
+
+        if($scope.route.destinations && $scope.route.destinations.length) {
+          $scope.route.destinations = _.map($scope.route.destinations, dest => {
+            return dest.ip + (dest.port ? ":" + dest.port : "");
+          })
+        }
+
         $scope.settings = SettingsService.getSettings();
         $scope.partial = 'js/app/routes/partials/form-route-' + availableFormattedVersion + '.html?r=' + Date.now();
 
@@ -28,17 +52,57 @@
 
           $scope.loading = true
 
-          if(!$scope.route.hosts) $scope.route.hosts = [];
-          if(!$scope.route.paths) $scope.route.paths = [];
-          if(!$scope.route.methods) $scope.route.methods = [];
-          if(!$scope.route.protocols) $scope.route.protocols = [];
-          // if(!$scope.route.snis) $scope.route.snis = [];
-          // if(!$scope.route.sources) $scope.route.sources = [];
-          // if(!$scope.route.destinations) $scope.route.destinations = [];
+          let data = _.cloneDeep($scope.route);
 
-          console.log("Submitting route", $scope.route);
+          if(!data.hosts || !data.hosts.length) data.hosts = null;
+          if(!data.paths || !data.paths.length) data.paths = null;
+          if(!data.headers || !data.headers.length) data.headers = null;
+          if(!data.methods || !data.methods.length) data.methods = null;
+          if(!data.protocols || !data.protocols.length) data.protocols = null;
+          if(!data.snis || !data.snis.length) data.snis = null;
+          if(!data.sources || !data.sources.length) data.sources = null;
+          if(!data.destinations || !data.destinations.length) data.destinations = null;
 
-          RoutesService.update($scope.route.id, _.omit($scope.route,["id", "data"]))
+          // Format sources and destingations and headers
+          if(data.sources && data.sources.length) {
+            data.sources = _.map(data.sources, (item) => {
+              const parts = item.split(":");
+              const obj = {};
+              obj.ip = parts[0]
+              if(parts[1]) obj.port = parseInt(parts[1])
+              return obj;
+            })
+          }
+
+          if(data.destinations && data.destinations.length) {
+            data.destinations = _.map(data.destinations, (item) => {
+              const parts = item.split(":");
+              const obj = {};
+              obj.ip = parts[0]
+              if(parts[1]) obj.port = parseInt(parts[1])
+              return obj;
+            })
+          }
+
+          if(data.headers && data.headers.length) {
+            data.headers = _.map(data.headers, (item) => {
+              const parts = item.split(":");
+              const obj = {};
+              obj[parts[0]] = parts[1].split(",").filter(function (el) {
+                return el;
+              })
+              return obj;
+            }).reduce(function(r, e) {
+              const key = Object.keys(e)[0];
+              const value = e[key];
+              r[key] = value;
+              return r;
+            }, {});
+          }
+
+          console.log("Submitting route", data);
+
+          RoutesService.update($scope.route.id, _.omit(data,["id", "data"]))
             .then(function (res) {
               $log.debug("Update Route: ", res)
               $scope.loading = false

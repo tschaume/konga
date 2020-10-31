@@ -21,13 +21,33 @@
           '013': {
             name: '',
             hosts: [],
-            protocols: [],
+            protocols: ["http", "https"],
             methods: [],
+            headers: [],
             paths: [],
             strip_path: true,
             preserve_host: false,
             https_redirect_status_code: 426,
-            regex_priority: 0
+            regex_priority: 0,
+            snis: [],
+            sources: [],
+            destinations: []
+          },
+          '015': {
+            name: '',
+            hosts: [],
+            protocols: ["http", "https"],
+            methods: [],
+            paths: [],
+            headers: [],
+            path_handling: "v1",
+            strip_path: true,
+            preserve_host: false,
+            https_redirect_status_code: 426,
+            regex_priority: 0,
+            snis: [],
+            sources: [],
+            destinations: []
           }
         }
 
