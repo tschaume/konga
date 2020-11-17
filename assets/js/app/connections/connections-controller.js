@@ -102,7 +102,7 @@
             label: 'Delete',
             className: 'btn-danger btn-link',
             callback: function callback(result, node) {
-              console.log(node)
+              // console.log(node)
               //$scope.deleteNode();
             }
           },
@@ -205,7 +205,6 @@
 
 
           if (!isActive(node)) {
-            console.log("node not active", node)
 
             // Check connection before assigning
             // the node to the user
@@ -230,7 +229,7 @@
             })
 
           } else {
-            console.log("node active")
+            // console.log("node active")
             toggleUserNode(node)
           }
 
@@ -384,7 +383,7 @@
             .count()
             .then(
               function onSuccess(response) {
-                console.log(response)
+                // console.log(response)
                 $scope.itemCount = response.count;
                 if ($scope.itemCount == 0) {
                   // Set Gateway to null to prevent unwanted panic in other pages
@@ -400,7 +399,7 @@
             .load(_.merge({}, commonParameters, parameters))
             .then(
               function onSuccess(response) {
-                console.log(response)
+                // console.log(response)
                 $scope.nodes = response;
                 updateActiveKongConnectionVersion();
 
@@ -491,12 +490,12 @@
 
           if(activeNode && activeNode.kong_version !== $rootScope.Gateway.version) {
 
-            console.log("##############################");
-            console.log("UPDATING ACTIVE CONNECTION KONG VERSION");
-            console.log("_______________________________________");
-            console.log("Gateway version", $rootScope.Gateway.version);
-            console.log("Active connection Kong version", activeNode.kong_version);
-            console.log("##############################");
+            // console.log("##############################");
+            // console.log("UPDATING ACTIVE CONNECTION KONG VERSION");
+            // console.log("_______________________________________");
+            // console.log("Gateway version", $rootScope.Gateway.version);
+            // console.log("Active connection Kong version", activeNode.kong_version);
+            // console.log("##############################");
 
 
             NodeModel

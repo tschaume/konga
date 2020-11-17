@@ -44,13 +44,12 @@
 
         // $scope.schema = _schema.data
         $scope.pluginName = _pluginName
-        console.log("Schema", $scope.schema)
         //$log.debug("Options", options)
         $scope.close = close
 
         // Define the plugins that will have their own custom form
         // so that it can be included via ng-include in the .html files
-        $scope.customPluginForms = ['statsd', 'response-ratelimiting'];
+        $scope.customPluginForms = ['statsd', 'response-ratelimiting', 'acme'];
 
         $scope.humanizeLabel = function (key) {
           return key.split("_").join(" ");
@@ -76,7 +75,6 @@
           // Assign extra properties from options to data fields
           PluginHelperService.assignExtraProperties(_pluginName, options, $scope.data.fields);
 
-          console.log("Extra properties added to fields =>", $scope.data.fields);
         }
 
 
@@ -154,16 +152,17 @@
             if (!request_data[key]) delete request_data[key]
           })
 
+
           // Delete unset config fields
           if(request_data.config) {
             Object.keys(request_data.config).forEach(function (key) {
-              if (!request_data.config[key]) delete request_data.config[key]
+              if (!request_data.config[key] ||
+                  (Array.isArray(request_data.config[key]) && !request_data.config[key].length) ||
+                  (_.isObject(request_data.config[key]) &&
+                      (Object.values(request_data.config[key]).every(v => v == null))))
+                delete request_data.config[key]
             })
           }
-
-
-          console.log("REQUEST DATA =>", request_data)
-
 
           PluginHelperService.addPlugin(
             request_data,

@@ -24,8 +24,6 @@
 
         $scope.partial = 'js/app/routes/partials/form-route-' + availableFormattedVersion + '.html?r=' + Date.now();
 
-        console.log("$scope.route", $scope.route, _service.id)
-
         $scope.close = function () {
           $uibModalInstance.dismiss()
         }
@@ -43,10 +41,48 @@
 
           clearRoute()
 
-          console.log("Route =>", $scope.route);
+          const data = _.cloneDeep($scope.route)
+
+          // Format sources, destingations and headers
+          if(data.sources && data.sources.length) {
+            data.sources = _.map(data.sources, (item) => {
+              const parts = item.split(":");
+              const obj = {};
+              obj.ip = parts[0]
+              if(parts[1]) obj.port = parseInt(parts[1])
+              return obj;
+            })
+          }
+
+          if(data.destinations && data.destinations.length) {
+            data.destinations = _.map(data.destinations, (item) => {
+              const parts = item.split(":");
+              const obj = {};
+              obj.ip = parts[0]
+              if(parts[1]) obj.port = parseInt(parts[1])
+              return obj;
+            })
+          }
+
+          if(data.headers && data.headers.length) {
+            data.headers = _.map(data.headers, (item) => {
+              const parts = item.split(":");
+              const obj = {};
+              obj[parts[0]] = parts[1].split(",").filter(function (el) {
+                return el;
+              })
+              return obj;
+            }).reduce(function(r, e) {
+              const key = Object.keys(e)[0];
+              const value = e[key];
+              r[key] = value;
+              return r;
+            }, {});
+          }
+
           $scope.errorMessage = '';
 
-          RoutesService.add($scope.route)
+          RoutesService.add(data)
             .then(function (res) {
               $rootScope.$broadcast('route.created')
               MessageService.success('Route created!')
@@ -76,11 +112,11 @@
           for (var key in $scope.route) {
 
             if ($scope.route[key] instanceof Array && !$scope.route[key].length) {
-              delete($scope.route[key]);
+              $scope.route[key] = null
             }
 
             if ($scope.route[key] === undefined || $scope.route[key] === "") {
-              delete($scope.route[key]);
+              $scope.route[key] = null
             }
           }
         }

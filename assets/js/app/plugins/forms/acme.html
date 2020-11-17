@@ -27,17 +27,6 @@
                             <!--<pre>{{field | json}}</pre>-->
                             <label><i class="mdi mdi-chevron-right"></i>{{getFieldProp(field)}}</label>
                             <div ng-switch on="field[getFieldProp(field)].type">
-                                <div ng-switch-when="array">
-                                    <chips ng-model="field[getFieldProp(field)].value">
-                                        <chip-tmpl>
-                                            <div class="default-chip">
-                                                {{chip}}
-                                                <i class="mdi mdi-close" remove-chip></i>
-                                            </div>
-                                        </chip-tmpl>
-                                        <input chip-control/>
-                                    </chips>
-                                </div>
                                 <div ng-switch-when="record">
                                     <div class="plugin-field-table">
                                         <div data-ng-repeat="_field in field[getFieldProp(field)].fields" class="well" style="background-color: #f2f2f2;border: 1px solid #eaeaea">
@@ -86,6 +75,59 @@
                             </div>
                         </div>
                     </div>
+
+
+                </div>
+
+                <!-- TYPE: MAP -->
+                <div ng-switch-when="map">
+
+                    <div data-ng-repeat="(mapKey, mapKeyValue) in value.value">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5>
+                                    {{mapKey}}
+                                </h5>
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <button type="button" ng-click="removeMap(mapKey, value)" class="btn btn-danger btn-link pull-right">
+                                    <i class="mdi mdi-delete"></i>
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                        <hr class="no-margin-top">
+
+                        <div class="plugin-field-table margin-bottom">
+                            <div data-ng-repeat="field in value.values.fields">
+                                <!--<pre>{{field | json}}</pre>-->
+                                <label><i class="mdi mdi-chevron-right"></i>{{getFieldProp(field)}}</label>
+                                <div ng-switch on="field[getFieldProp(field)].type">
+                                    <div ng-switch-when="array">
+                                        <chips ng-model="field[getFieldProp(field)].value">
+                                            <chip-tmpl>
+                                                <div class="default-chip">
+                                                    {{chip}}
+                                                    <i class="mdi mdi-close" remove-chip></i>
+                                                </div>
+                                            </chip-tmpl>
+                                            <input chip-control/>
+                                        </chips>
+                                    </div>
+                                    <div ng-switch-default>
+                                        <input type="{{field[getFieldProp(field)].type}}" ng-model="mapKeyValue[getFieldProp(field)]" class="form-control">
+                                    </div>
+                                    <div class="text-danger" ng-if="errors[key]" data-ng-bind="errors[key]"></div>
+                                    <p class="help-block">{{data.help}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <button class="btn btn-block btn-flat margin-top" ng-click="addMap(value)">Add {{humanizeLabel(key)}}</button>
 
 
                 </div>
@@ -213,7 +255,6 @@
                             type="checkbox"
                             switch-on-text="YES"
                             switch-off-text="NO"
-                            ng-change="updateApi(api)"
                     >
 
                 </div>

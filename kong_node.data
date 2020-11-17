@@ -1,0 +1,9 @@
+module.exports = [
+    {
+        "name": "MPContribs AWS Kong Node",
+        "type": "default",
+        "kong_admin_url": process.env.KONG_URL,
+        "health_checks": false,
+        "active": true
+    }
+]

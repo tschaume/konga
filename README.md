@@ -13,6 +13,12 @@ or becoming a [Patron](https://www.patreon.com/kongaui). Cheers!
 <a href="https://www.buymeacoffee.com/F1aRIj8CG" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
 
+## Supported by
+
+Special thanks to our supporters that help us keep the project going and the motivation alive.
+
+<a href="https://www.greenbird.com" target="_blank"><img src="screenshots/greenbird.png" width="250"></a>
+
 ## Summary
 
 - [**Discussions & Support**](#discussions--support)
@@ -45,14 +51,14 @@ If you need to discuss anything Konga related, we have a chatroom on Gitter:
 * Easy database integration (MySQL, postgresSQL, MongoDB).
 
 ## Compatibility
-**From 0.14.0 onwards, Konga is ONLY compatible with Kong >= 1.0.0**
+**From 0.14.0 onwards, Konga is ONLY compatible with Kong 1.x**
 
 If you're on an older Kong version , use [this](https://github.com/pantsel/konga/tree/legacy) branch 
 or `konga:legacy` from docker hub instead.
 
 ## Prerequisites
 - A running [Kong installation](https://getkong.org/) 
-- Nodejs >= 8 (8.11.3 LTS is recommended)
+- Nodejs >= 8, <= 12.x (12.16 LTS is recommended)
 - Npm
 
 ## Used libraries
@@ -270,16 +276,14 @@ greater than 60000, like 120000.
 - [**Kong Admin proxy**](https://github.com/pantsel/kong-admin-proxy)
 - [**Kong Middleman plugin**](https://github.com/pantsel/kong-middleman-plugin)
 
-
 ## Author
+
 Panagis Tselentis
 
 ## License
 ```
 The MIT License (MIT)
 =====================
-
-Copyright (c) 2015 Panagis Tselentis
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

@@ -1,0 +1,12 @@
+module.exports = [
+    {
+        "username": process.env.KONGA_ADMIN_USERNAME,
+        "email": process.env.KONGA_ADMIN_EMAIL,
+        "firstName": process.env.KONGA_ADMIN_FIRSTNAME,
+        "lastName": process.env.KONGA_ADMIN_LASTNAME,
+        "node_id": process.env.KONG_URL,
+        "admin": true,
+        "active" : true,
+        "password": process.env.KONGA_ADMIN_PASSWORD
+    },
+]
